@@ -50,7 +50,10 @@ def main():
         LB_global=max(LB_global,object_value)
 
         #更新上界值：可行解代入目标函数
-        UB_global =path_mean[shortest_path_index]+path_var[shortest_path_index]**0.5
+        UB_local=path_mean[shortest_path_index]+path_var[shortest_path_index]**0.5
+        if UB_global>UB_local:
+            UB_global=UB_local
+            reliable_path_index=shortest_path_index
 
         #更新gap值
         gap=(UB_global-LB_global)/UB_global
@@ -65,7 +68,7 @@ def main():
     # print(iteration)
     # print(gap)
     print(multiplier_list)
-    print("最可靠路径为{}，其目标值为{},gap值为{}".format(shortest_path_index,UB_global,gap))
+    print("最可靠路径为{}，其目标值为{},gap值为{}".format(reliable_path_index,UB_global,gap))
 
 
 
